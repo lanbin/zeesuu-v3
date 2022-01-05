@@ -1,0 +1,16 @@
+{
+  "name": "@zeesuu-v3/search-table",
+  "version": "1.0.0",
+  "description": "Search Table Component for Vue@3",
+  "main": "index.ts",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lanbin/zeesuu-v3",
+    "directory": "packages/search-table"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "lanbin1987@gmail.com",
+  "license": "MIT"
+}

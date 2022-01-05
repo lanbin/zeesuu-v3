@@ -1,0 +1,14 @@
+{
+  "name": "zeesuu-v3",
+  "private": true,
+  "devDependencies": {
+    "prettier": "^2.5.1"
+  },
+  "dependencies": {
+    "@element-plus/icons-vue": "^0.2.4",
+    "element-plus": "^1.3.0-beta.1",
+    "less": "^4.1.2",
+    "typescript": "^4.5.4",
+    "vue": "^3.2.26"
+  }
+}
