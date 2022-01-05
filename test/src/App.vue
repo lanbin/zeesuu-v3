@@ -1,11 +1,8 @@
 <script setup lang="ts">
   import { onMounted, reactive, ref } from 'vue';
-  import {
-    iSearchTableExposeData,
-    iSearchTablePropsConfig,
-  } from '../../packages/search-table/components/SearchTable';
-  import SearchTable from '../../packages/search-table/components/SearchTable/index.vue';
-  import useSearchTable from '../../packages/search-table/components/SearchTable/useSearchTable';
+  import { iSearchTableExposeData, iSearchTablePropsConfig } from '../../packages/search-table';
+  import SearchTable from '../../packages/search-table/index.vue';
+  import useSearchTable from '../../packages/search-table/useSearchTable';
 
   const { defaultDatePickerConfig } = useSearchTable();
   const SearchTableRef = ref<iSearchTableExposeData>();
