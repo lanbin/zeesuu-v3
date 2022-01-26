@@ -45,6 +45,7 @@ export interface iSearchTablePropsConfig {
 }
 
 export interface iSearchTableExposeData {
+  searchData: iSearchDataItem;
   fetchData: () => void;
   updateSearchFormData: (params: any) => void;
 }

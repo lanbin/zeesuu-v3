@@ -1,7 +1,5 @@
 <template>
   <div class="search-table-box">
-    {{ tableData }}
-    {{ searchData }}
     <!-- Inputs -->
     <el-row :gutter="10" class="component-box">
       <el-col :span="6" v-for="(formItem, index) in innerConfig.formOptions" :key="index">
@@ -87,7 +85,6 @@
 
   // Update Inner Config
   const innerConfig = computed<iSearchTablePropsConfig>(() => {
-    console.log(options);
     return Object.assign(tableConfig, options);
   });
 
@@ -154,6 +151,7 @@
 
   // Expose
   defineExpose({
+    searchData,
     fetchData,
     updateSearchFormData,
   } as iSearchTableExposeData);
