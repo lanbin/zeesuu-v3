@@ -1,14 +1,26 @@
 {
   "name": "zeesuu-v3",
-  "private": true,
-  "devDependencies": {
-    "prettier": "^2.5.1"
+  "private": "true",
+  "scripts": {
+    "version": "lerna version",
+    "pub": "lerna publish from-git"
   },
+  "devDependencies": {
+    "prettier": "^2.5.1",
+    "lerna": "^4.0.0"
+  },
+  "workspaces": [
+    "packages/*"
+  ],
   "dependencies": {
-    "@element-plus/icons-vue": "^0.2.4",
-    "element-plus": "^1.3.0-beta.1",
+    "@element-plus/icons-vue": "^0.2.6",
+    "element-plus": "^1.3.0-beta.9",
     "less": "^4.1.2",
-    "typescript": "^4.5.4",
+    "typescript": "^4.5.5",
     "vue": "^3.2.26"
+  },
+  "engines": {
+    "node": ">= 14.15.0",
+    "yarn": ">=1.4.0"
   }
 }
