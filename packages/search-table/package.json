@@ -1,6 +1,6 @@
 {
   "name": "@zeesuu-v3/search-table",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Search Table Component for Vue@3",
   "main": "index.ts",
   "repository": {
