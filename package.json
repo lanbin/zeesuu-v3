@@ -1,6 +1,6 @@
 {
   "name": "zeesuu-v3",
-  "private": "true",
+  "private": "false",
   "scripts": {
     "version": "lerna version",
     "pub": "lerna publish from-git"
