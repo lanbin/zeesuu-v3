@@ -48,18 +48,9 @@
 </template>
 
 <script lang="ts" setup>
-  import { iSearchTableExposeData, iSearchTablePropsConfig, iSearchDataItem } from './index';
+  import { iSearchTableExposeData, iSearchTablePropsConfig, iSearchDataItem } from './index.d';
   import useSearchTable from './useSearchTable';
-  import {
-    defineProps,
-    defineExpose,
-    PropType,
-    ref,
-    computed,
-    watch,
-    reactive,
-    onMounted,
-  } from 'vue';
+  import { defineProps, defineExpose, PropType, ref, computed, reactive, onMounted } from 'vue';
   import { Search, DeleteFilled } from '@element-plus/icons-vue';
 
   // Props
@@ -90,7 +81,7 @@
 
   // Set Default Search Data
   if (Array.isArray(options.formOptions)) {
-    options.formOptions.forEach((item) => {
+    options.formOptions.forEach((item: any) => {
       searchData[item.name] = item.value;
       initSearchData[item.name] = item.value;
     });
