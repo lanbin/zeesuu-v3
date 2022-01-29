@@ -8,12 +8,16 @@
     "url": "https://github.com/lanbin/zeesuu-v3",
     "directory": "packages/search-table"
   },
-  "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
-  },
+  "scripts": {},
   "publishConfig": {
     "access": "public"
   },
+  "keywords": [
+    "element-ui",
+    "table",
+    "component",
+    "cms"
+  ],
   "author": "lanbin1987@gmail.com",
   "license": "MIT"
 }
