@@ -19,9 +19,7 @@ export interface iSelectPluginOption {
   api?: {
     [key: string]: iSelectPluginOptionApi;
   };
-  custom: {
-    [key: string]: SelectOptions;
-  };
+  custom: iSelectOptionConfig;
 }
 
 export declare type SelectOptionLabel = string | number | Object;

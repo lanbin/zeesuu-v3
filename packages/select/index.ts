@@ -10,6 +10,8 @@ import {
 import SelectComponent from './index.vue';
 import { toRaw } from 'vue';
 
+export * from './index.d';
+
 // Default YesNo Data config
 const SELECT_DATA: iSelectOptionConfig = {
   yesNo: [
@@ -41,8 +43,6 @@ export default {
     const { api, custom } = option;
 
     if (!api && !custom) return;
-
-    console.log(api, custom);
 
     const selectData: iSelectOptionConfig = {
       ...SELECT_DATA,

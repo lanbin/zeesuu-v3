@@ -35,7 +35,6 @@ export interface iSearchTablePropsConfig {
   querySuccess?: Function;
   tableAttrs?: any;
 
-  //   TODO:
   pageAttrs?: any;
   pagination?: Object;
   pageOffset?: number;

@@ -1,3 +1,4 @@
+import { App } from 'vue';
 const PACKNAME = '[@zeesuu-v3/service]';
 /**
  * 首字母大写
@@ -11,7 +12,16 @@ const ProtocalReg = /^http(s?)/;
 const ParamReg = /\((.+?)\)/g;
 
 export default {
-  install(Vue: any, options: any) {
+  install(
+    Vue: App,
+    options: {
+      $http: any;
+      apis: Array<string>;
+      appRoot: string;
+      isMini?: boolean;
+      debug?: boolean;
+    },
+  ) {
     const { $http, apis, appRoot = '', isMini = false } = options;
     const { version } = Vue;
 
@@ -22,11 +32,7 @@ export default {
     const $service = {} as { [key: string]: (data: { [key: string]: any }, option: any) => any };
     const $url = {} as { [key: string]: string };
 
-    if (version.match(/^3(.*)/)) {
-      Vue.config.globalProperties.$http = Vue.config.globalProperties.$http || $http;
-    } else {
-      Vue.prototype.$http = Vue.prototype.$http || $http;
-    }
+    Vue.config.globalProperties.$http = Vue.config.globalProperties.$http || $http;
 
     // 转成service
     if (apis) {
@@ -97,11 +103,7 @@ export default {
 
           let R = null;
 
-          if (Vue.prototype && Vue.prototype.$http) {
-            R = Vue.prototype.$http;
-          } else {
-            R = Vue.config.globalProperties.$http;
-          }
+          R = Vue.config.globalProperties.$http;
 
           if (isMini) {
             return R({ data, ...param });
@@ -114,17 +116,12 @@ export default {
 
     // 便于调试
     if (options.debug) {
+      console.log('124443');
       console.log($service);
+      console.log($url);
     }
 
-    Vue.config.globalProperties.$service = {
-      ...(Vue.config.globalProperties.$service || {}),
-      ...$service,
-    };
-
-    Vue.config.globalProperties.$url = {
-      ...(Vue.config.globalProperties.$url || {}),
-      ...$url,
-    };
+    Vue.provide('$service', $service);
+    Vue.provide('$url', $url);
   },
 };

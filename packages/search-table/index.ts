@@ -1,4 +1,6 @@
-import SearchTable from './SearchTable.vue';
+import SearchTable from './index.vue';
+
+export * from './index.d';
 
 export default {
   install(Vue: any, options: any) {

@@ -28,7 +28,6 @@
         {{ innerConfig.resetBtnText }}
       </el-button>
     </div>
-    {{ innerConfig.tableAttrs }}
     <!-- Table -->
     <el-table :data="tableData" :border="true" v-bind="innerConfig.tableAttrs">
       <el-table-column type="selection" label=""></el-table-column>
@@ -50,7 +49,7 @@
 <script lang="ts" setup>
   import { iSearchTableExposeData, iSearchTablePropsConfig, iSearchDataItem } from './index.d';
   import useSearchTable from './useSearchTable';
-  import { defineProps, defineExpose, PropType, ref, computed, reactive, onMounted } from 'vue';
+  import { PropType, ref, computed, reactive, onMounted } from 'vue';
   import { Search, DeleteFilled } from '@element-plus/icons-vue';
 
   // Props
