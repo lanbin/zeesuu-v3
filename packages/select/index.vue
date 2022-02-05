@@ -12,7 +12,7 @@
       <el-option
         :value="opt.value.toString()"
         :label="opt.label"
-        v-for="(opt: any, index) in loopData"
+        v-for="(opt, index) in loopData"
         :key="index"
       ></el-option>
     </el-select>
@@ -21,6 +21,7 @@
 
 <script lang="ts" setup>
   import { getCurrentInstance, getCurrentScope, onMounted, reactive, ref, watch } from 'vue';
+  import { iSelectOption } from '.';
 
   const { label, value, conf, valueJoiner, type } = defineProps({
     type: {
@@ -46,7 +47,7 @@
   const emits = defineEmits(['update:value']);
 
   const selectVal = ref('');
-  const loopData = reactive([]);
+  const loopData = reactive<iSelectOption[]>([]);
 
   watch(
     () => value,

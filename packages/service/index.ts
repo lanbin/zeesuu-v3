@@ -1,4 +1,13 @@
 import { App } from 'vue';
+
+export interface iZeesuuService {
+  [key: string]: (data?: { [key: string]: any }, option?: any) => any;
+}
+
+export interface iZeesuuUrl {
+  [key: string]: string;
+}
+
 const PACKNAME = '[@zeesuu-v3/service]';
 /**
  * 首字母大写
@@ -29,8 +38,8 @@ export default {
       return console.error(`${PACKNAME} 缺少$http字段配置, 请指定负责请求发送的对象, 如: axios.`);
     }
 
-    const $service = {} as { [key: string]: (data: { [key: string]: any }, option: any) => any };
-    const $url = {} as { [key: string]: string };
+    const $service = {} as iZeesuuService;
+    const $url = {} as iZeesuuUrl;
 
     Vue.config.globalProperties.$http = Vue.config.globalProperties.$http || $http;
 
@@ -74,7 +83,7 @@ export default {
         }
 
         // 批量生成Service
-        $service[keyName] = (data: { [key: string]: any }, option = {}) => {
+        $service[keyName] = (data?: { [key: string]: any }, option?) => {
           // 替换Url的参数
           if (hasUrlParams) {
             // 如果当前url标明了有参数,但是又没传一个,则报错
@@ -116,7 +125,6 @@ export default {
 
     // 便于调试
     if (options.debug) {
-      console.log('124443');
       console.log($service);
       console.log($url);
     }

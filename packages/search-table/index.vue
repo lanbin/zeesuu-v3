@@ -17,6 +17,7 @@
     </el-row>
     <!-- Buttons -->
     <div class="search-table-btn-box">
+      <slot name="before-btn"></slot>
       <el-button type="primary" @click="fetchData" v-if="!!innerConfig?.formOptions" :icon="Search">
         {{ innerConfig.queryBtnText }}
       </el-button>
@@ -27,14 +28,11 @@
       >
         {{ innerConfig.resetBtnText }}
       </el-button>
+      <slot name="after-btn"></slot>
     </div>
     <!-- Table -->
     <el-table :data="tableData" :border="true" v-bind="innerConfig.tableAttrs">
-      <el-table-column type="selection" label=""></el-table-column>
-      <el-table-column type="index" label="Index" width="100px"></el-table-column>
-      <el-table-column prop="date" label="date"></el-table-column>
-      <el-table-column prop="name" label="name"></el-table-column>
-      <el-table-column prop="address" label="address"></el-table-column>
+      <slot></slot>
     </el-table>
     <!-- Pagination -->
     <div class="pagination-box">
@@ -88,35 +86,13 @@
 
   // Fetch Table Data
   const fetchData = () => {
-    console.log('fetch Date from', innerConfig.value.apiUrl, 'with', searchData);
-    tableData.value = reactive([
-      {
-        date: '2016-05-03',
-        name: 'Tom',
-        address: 'No. 189, Grove St, Los Angeles',
-      },
-      {
-        date: '2016-05-02',
-        name: 'Tom',
-        address: 'No. 189, Grove St, Los Angeles',
-      },
-      {
-        date: '2016-05-04',
-        name: 'Tom',
-        address: 'No. 189, Grove St, Los Angeles',
-      },
-      {
-        date: '2016-05-01',
-        name: 'Tom',
-        address: 'No. 189, Grove St, Los Angeles',
-      },
-    ]);
-
     // Update Pagination
     innerConfig.value.pageAttrs.total = 30;
 
     // Fetch Success callback
     innerConfig.value.querySuccess && innerConfig.value.querySuccess();
+
+    console.log('fetchData', searchData);
     emits('search', searchData);
   };
 
@@ -157,7 +133,7 @@
     flex-direction: column;
 
     .search-table-btn-box {
-      margin: 10px 0;
+      margin: 0 0 10px 0;
       box-sizing: border-box;
       display: flex;
     }
