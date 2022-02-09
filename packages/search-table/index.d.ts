@@ -24,12 +24,13 @@ export interface iSearchDataItem {
 }
 
 export interface iSearchTablePropsConfig {
-  apiUrl: string;
+  apiUrl?: string;
+  listName: string;
+  fetchMethod?: (data?: any) => Promise<any>;
   formOptions?: Array<iSearchTableFormOptionItem>;
   resetBtnText?: string;
   queryBtnText?: string;
   rowKey?: string;
-  listName?: string;
   itemPerRow?: number | string;
   beforeQuery?: Function;
   querySuccess?: Function;

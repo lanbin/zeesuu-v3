@@ -18,12 +18,12 @@
     <!-- Buttons -->
     <div class="search-table-btn-box">
       <slot name="before-btn"></slot>
-      <el-button type="primary" @click="fetchData" v-if="!!innerConfig?.formOptions" :icon="Search">
+      <el-button type="primary" @click="fetchData" v-if="hasFormOptions" :icon="Search">
         {{ innerConfig.queryBtnText }}
       </el-button>
       <el-button
         @click="resetSearchData"
-        v-if="innerConfig.showResetBtn && !!innerConfig.formOptions"
+        v-if="innerConfig.showResetBtn && hasFormOptions"
         :icon="DeleteFilled"
       >
         {{ innerConfig.resetBtnText }}
@@ -38,7 +38,10 @@
     <div class="pagination-box">
       <el-pagination
         layout="total, prev, pager, next"
-        v-bind="innerConfig.pageAttrs"
+        :pager="innerConfig.pageAttrs.page"
+        :page-size="innerConfig.pageAttrs.size"
+        :total="innerConfig.pageAttrs.total"
+        @current-change="pageChanged"
       ></el-pagination>
     </div>
   </div>
@@ -76,6 +79,11 @@
     return Object.assign(tableConfig, options);
   });
 
+  const hasFormOptions = computed<boolean>(() => {
+    if (innerConfig?.value?.formOptions) return innerConfig.value.formOptions.length > 0;
+    return false;
+  });
+
   // Set Default Search Data
   if (Array.isArray(options.formOptions)) {
     options.formOptions.forEach((item: any) => {
@@ -85,15 +93,27 @@
   }
 
   // Fetch Table Data
-  const fetchData = () => {
+  const fetchData = async () => {
     // Update Pagination
-    innerConfig.value.pageAttrs.total = 30;
+    if (innerConfig.value.fetchMethod) {
+      const {page, size} = innerConfig.value.pageAttrs
+      const result = await innerConfig.value.fetchMethod({
+        ...searchData,
+       page, 
+       size, 
+      });
+      innerConfig.value.pageAttrs.total = result.total;
 
-    // Fetch Success callback
-    innerConfig.value.querySuccess && innerConfig.value.querySuccess();
+      tableData.value = result[innerConfig?.value?.listName];
+      // Fetch Success callback
+      innerConfig.value.querySuccess && innerConfig.value.querySuccess();
+      emits('search', searchData);
+    }
+  };
 
-    console.log('fetchData', searchData);
-    emits('search', searchData);
+  const pageChanged = (page: number) => {
+    innerConfig.value.pageAttrs.page = page;
+    fetchData();
   };
 
   // Set Default Form Data

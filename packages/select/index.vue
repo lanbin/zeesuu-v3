@@ -10,7 +10,7 @@
       @change="selectHandler"
     >
       <el-option
-        :value="opt.value.toString()"
+        :value="opt.value"
         :label="opt.label"
         v-for="(opt, index) in loopData"
         :key="index"
@@ -86,7 +86,7 @@
     let value = '';
 
     if (conf && typeof conf.setDefaultIndex !== 'undefined') {
-      selectVal.value = (loopData[conf.setDefaultIndex] as any).toString();
+      selectVal.value = (loopData[conf.setDefaultIndex] as any);
       selectHandler();
       delete conf.setDefaultIndex;
       return;
@@ -97,7 +97,7 @@
         value = '';
         break;
       default:
-        value = value.toString();
+        value = value;
     }
 
     // selectVal.value = value.length > 0 && $attrs.multiple ? value.split(valueJoiner) : value;

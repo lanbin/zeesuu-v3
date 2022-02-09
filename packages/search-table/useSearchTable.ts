@@ -17,7 +17,7 @@ export default () => {
     pagination: {},
     pageAttrs: {
       total: 0,
-      page: 0,
+      page: 1,
       size: 10,
     },
     pageOffset: 0,

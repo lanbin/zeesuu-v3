@@ -1,9 +1,9 @@
-declare module '@vue/runtime-core' {
-  interface ComponentCustomProperties {
-    $selectData: iSelectOptionConfig;
-    $selectFormat: iSelectFormat;
-  }
-}
+// declare module '@vue/runtime-core' {
+//   interface ComponentCustomProperties {
+//     $selectData: iSelectOptionConfig;
+//     $selectFormat: iSelectFormat;
+//   }
+// }
 
 export interface iSelectPluginOptionApiParam {
   url: string;

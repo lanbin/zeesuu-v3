@@ -1,12 +1,6 @@
 import { App } from 'vue';
 
-export interface iZeesuuService {
-  [key: string]: (data?: { [key: string]: any }, option?: any) => any;
-}
-
-export interface iZeesuuUrl {
-  [key: string]: string;
-}
+import { iZeesuuService, iZeesuuUrl } from './index.d';
 
 const PACKNAME = '[@zeesuu-v3/service]';
 /**
@@ -32,7 +26,6 @@ export default {
     },
   ) {
     const { $http, apis, appRoot = '', isMini = false } = options;
-    const { version } = Vue;
 
     if (!$http) {
       return console.error(`${PACKNAME} 缺少$http字段配置, 请指定负责请求发送的对象, 如: axios.`);
@@ -129,7 +122,9 @@ export default {
       console.log($url);
     }
 
-    Vue.provide('$service', $service);
-    Vue.provide('$url', $url);
+    Vue.provide<iZeesuuService>('$service', $service);
+    window.ZeesuuService = $service;
+    Vue.provide<iZeesuuUrl>('$url', $url);
+    window.ZeesuuUrl = $url;
   },
 };

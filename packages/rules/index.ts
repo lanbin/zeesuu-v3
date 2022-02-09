@@ -236,7 +236,7 @@ const RULE_TRIGGER = ['blur', 'change'];
 
 export default {
   // 通用验证条件
-  COMMON_RULE: (opt: {}) => {
+  COMMON_RULE: (opt?: {}): Array<any> => {
     return [
       {
         message: '该项为必填项',
@@ -249,12 +249,12 @@ export default {
   },
 
   // 深度验证
-  DEEP_RULE: (opt: {}) => {
+  DEEP_RULE: (opt?: {}) => {
     return { type: 'object', fields: {}, required: true, ...opt };
   },
 
   // Blur 验证
-  BLUR_RULE: (opt: {}) => {
+  BLUR_RULE: (opt?: {}) => {
     return [
       {
         message: '该项为必填项',
@@ -267,7 +267,7 @@ export default {
   },
 
   // 长度限制
-  LENGTH_RULE: (min: number, max: number = 20, message: string) => [
+  LENGTH_RULE: (min: number, max: number = 20, message?: string) => [
     {
       min,
       max,
