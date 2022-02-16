@@ -1,6 +1,6 @@
 {
   "name": "@zeesuu-v3/select",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "Configurable select component for vue@3. Base on Element-ui.",
   "main": "index.ts",
   "repository": {
