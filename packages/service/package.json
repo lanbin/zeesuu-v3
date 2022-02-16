@@ -2,7 +2,8 @@
   "name": "@zeesuu-v3/service",
   "version": "1.0.2",
   "description": "compile API settings to service function",
-  "main": "index.js",
+  "main": "./index.ts",
+  "types": "./index.d.ts",
   "repository": {
     "type": "git",
     "url": "https://github.com/lanbin/zeesuu-v3",
