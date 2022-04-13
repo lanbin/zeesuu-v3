@@ -1,4 +1,4 @@
-import { App } from 'vue';
+import { App, Plugin } from 'vue';
 
 import { iZeesuuService, iZeesuuUrl } from './index.d';
 
@@ -127,4 +127,5 @@ export default {
     Vue.provide<iZeesuuUrl>('$url', $url);
     window.ZeesuuUrl = $url;
   },
-};
+} as Plugin;
+
