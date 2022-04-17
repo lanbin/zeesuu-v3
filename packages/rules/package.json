@@ -2,20 +2,38 @@
   "name": "@zeesuu-v3/rules",
   "version": "1.0.2",
   "description": "common Rules for asnyc-validate",
-  "main": "index.ts",
-  "scripts": {},
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/lanbin/zeesuu-v3",
-    "directory": "packages/rules"
-  },
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
   "keywords": [
     "async-validate",
     "rules"
   ],
+  "author": "lanbin <lanbin1987@gmail.com>",
+  "homepage": "https://github.com/lanbin/zeesuu-v3#readme",
+  "license": "MIT",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lanbin/zeesuu.git",
+    "directory": "packages/rules"
+  },
+  "scripts": {
+    "tsc": "tsc"
+  },
   "publishConfig": {
     "access": "public"
   },
-  "author": "lanbin1987@gmail.com",
-  "license": "MIT"
+  "bugs": {
+    "url": "https://github.com/lanbin/zeesuu-v3/issues"
+  },
+  "devDependencies": {
+    "typescript": "^4.6.3"
+  }
 }
+

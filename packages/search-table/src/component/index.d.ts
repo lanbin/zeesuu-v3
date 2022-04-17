@@ -25,15 +25,17 @@ export interface iSearchDataItem {
 
 export interface iSearchTablePropsConfig {
   apiUrl?: string;
-  listName: string;
+  listName?: string;
+  resetFetchData?: boolean;
+  itemPerRow?: number;
+  staticData?: iSearchDataItem[];
   fetchMethod?: (data?: any) => Promise<any>;
   formOptions?: Array<iSearchTableFormOptionItem>;
   resetBtnText?: string;
   queryBtnText?: string;
   rowKey?: string;
-  itemPerRow?: number | string;
-  beforeQuery?: Function;
-  querySuccess?: Function;
+  beforeQuery?: (data: any) => {};
+  querySuccess?: () => {};
   tableAttrs?: any;
 
   pageAttrs?: any;
@@ -44,8 +46,16 @@ export interface iSearchTablePropsConfig {
   fetchAfterReset?: boolean;
 }
 
+export interface iSearchTableFetchDataParams {
+  firstPage?: boolean;
+}
+
+export type tSearchTableFetchDataMethod = (params?: iSearchTableFetchDataParams) => void;
+
 export interface iSearchTableExposeData {
   searchData: iSearchDataItem;
-  fetchData: () => void;
+  fetchData: tSearchTableFetchDataMethod;
   updateSearchFormData: (params: any) => void;
+  cleanAllData: () => void;
 }
+

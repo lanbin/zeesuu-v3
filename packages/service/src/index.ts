@@ -1,6 +1,19 @@
-import { App, Plugin } from 'vue';
+import { App } from 'vue';
 
-import { iZeesuuService, iZeesuuUrl } from './index.d';
+export interface iZeesuuService {
+  [key: string]: (data?: { [key: string]: any }, option?: any) => any;
+}
+
+export interface iZeesuuUrl {
+  [key: string]: string;
+}
+
+declare global {
+  interface Window {
+    ZeesuuService: iZeesuuService;
+    ZeesuuUrl: iZeesuuUrl;
+  }
+}
 
 const PACKNAME = '[@zeesuu-v3/service]';
 /**
@@ -103,7 +116,7 @@ export default {
             ...option,
           };
 
-          let R = null;
+          let R;
 
           R = Vue.config.globalProperties.$http;
 
@@ -127,5 +140,5 @@ export default {
     Vue.provide<iZeesuuUrl>('$url', $url);
     window.ZeesuuUrl = $url;
   },
-} as Plugin;
+} as any;
 

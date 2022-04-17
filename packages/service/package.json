@@ -2,17 +2,34 @@
   "name": "@zeesuu-v3/service",
   "version": "1.0.4",
   "description": "compile API settings to service function",
-  "main": "./index.ts",
-  "types": "./index.d.ts",
+  "main": "lib/index.js",
+  "types": "lib/index.d.ts",
+  "author": "lanbin <lanbin1987@gmail.com>",
+  "homepage": "https://github.com/lanbin/zeesuu-v3#readme",
+  "license": "MIT",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/lanbin/zeesuu-v3",
-    "directory": "packages/service"
+    "url": "git+https://github.com/lanbin/zeesuu.git",
+    "directory": "packages/rules"
   },
-  "scripts": {},
-  "author": "lanbin",
-  "license": "MIT",
+  "scripts": {
+    "tsc": "tsc"
+  },
   "publishConfig": {
     "access": "public"
+  },
+  "bugs": {
+    "url": "https://github.com/lanbin/zeesuu-v3/issues"
+  },
+  "devDependencies": {
+    "typescript": "^4.6.3"
   }
 }
+

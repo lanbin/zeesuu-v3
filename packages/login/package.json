@@ -1,10 +1,12 @@
 {
-  "name": "@zeesuu-v3/permission",
-  "version": "1.0.1",
-  "description": "Permission directive of vue3",
+  "name": "@zeesuu-v3/login",
+  "version": "1.0.0",
+  "description": "Login Component for Vue@3",
   "keywords": [
-    "permission",
-    "vue"
+    "login",
+    "zeesuu",
+    "typescript",
+    "vue3"
   ],
   "author": "lanbin <lanbin1987@gmail.com>",
   "homepage": "https://github.com/lanbin/zeesuu-v3#readme",
@@ -20,8 +22,8 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/lanbin/zeesuu.git",
-    "directory": "packages/permission"
+    "url": "git+https://github.com/lanbin/zeesuu-v3.git",
+    "directory": "packages/login"
   },
   "scripts": {
     "tsc": "tsc"
@@ -34,6 +36,9 @@
   },
   "devDependencies": {
     "typescript": "^4.6.3"
+  },
+  "dependencies": {
+    "vuex": "^4.0.2"
   }
 }
 
