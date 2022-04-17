@@ -37,7 +37,8 @@
     "directory": "packages/search-table"
   },
   "scripts": {
-    "tsc": "vite build --watch"
+    "tsc": "vite build",
+    "dev": "vite build --watch"
   },
   "publishConfig": {
     "access": "public"

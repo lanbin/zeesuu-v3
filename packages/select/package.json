@@ -36,7 +36,8 @@
     "directory": "packages/select"
   },
   "scripts": {
-    "tsc": "vite build --watch"
+    "tsc": "vite build",
+    "dev": "vite build --watch"
   },
   "bugs": {
     "url": "https://github.com/lanbin/zeesuu-v3/issues"
