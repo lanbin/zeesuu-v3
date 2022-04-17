@@ -1,6 +1,6 @@
 {
   "name": "@zeesuu-v3/rules",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "common Rules for asnyc-validate",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
@@ -36,4 +36,3 @@
     "typescript": "^4.6.3"
   }
 }
-

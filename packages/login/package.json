@@ -1,6 +1,6 @@
 {
   "name": "@zeesuu-v3/login",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Login Component for Vue@3",
   "keywords": [
     "login",
@@ -41,4 +41,3 @@
     "vuex": "^4.0.2"
   }
 }
-
