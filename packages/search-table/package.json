@@ -2,15 +2,18 @@
   "name": "@zeesuu-v3/search-table",
   "version": "1.0.6",
   "description": "Search Table Component for Vue@3",
-  "main": "index.ts",
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/lanbin/zeesuu-v3",
-    "directory": "packages/search-table"
-  },
-  "scripts": {},
-  "publishConfig": {
-    "access": "public"
+  "types": "./src/component/index.d.ts",
+  "module": "./dist/build.es.ts",
+  "main": "./dist/build.es.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/build.es.ts",
+      "require": "./dist/build.umd.ts"
+    },
+    "./dist/style.css": {
+      "import": "./dist/style.css",
+      "require": "./dist/style.css"
+    }
   },
   "keywords": [
     "element-ui",
@@ -18,6 +21,40 @@
     "component",
     "cms"
   ],
-  "author": "lanbin1987@gmail.com",
-  "license": "MIT"
+  "author": "lanbin <lanbin1987@gmail.com>",
+  "homepage": "https://github.com/lanbin/zeesuu-v3#readme",
+  "license": "MIT",
+  "directories": {
+    "lib": "lib",
+    "test": "__tests__"
+  },
+  "files": [
+    "lib"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lanbin/zeesuu.git",
+    "directory": "packages/search-table"
+  },
+  "scripts": {
+    "tsc": "vite build --watch"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "bugs": {
+    "url": "https://github.com/lanbin/zeesuu-v3/issues"
+  },
+  "devDependencies": {
+    "@types/lodash-es": "^4.17.6",
+    "@vitejs/plugin-vue": "^2.3.1",
+    "less": "^4.1.2",
+    "typescript": "^4.6.3",
+    "vite": "^2.9.5"
+  },
+  "dependencies": {
+    "lodash-es": "^4.17.21",
+    "vue": "^3.2.33"
+  }
 }
+

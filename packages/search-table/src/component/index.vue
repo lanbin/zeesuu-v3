@@ -1,57 +1,78 @@
 <template>
   <div class="search-table-box">
+    <div>123</div>
     <!-- Inputs -->
-    <el-row :gutter="10" class="component-box">
-      <el-col :span="6" v-for="(formItem, index) in innerConfig.formOptions" :key="index">
+    <ElRow :gutter="10" class="component-box">
+      <ElCol
+        :span="24 / innerConfig.itemPerRow!"
+        v-for="(formItem, index) in innerConfig.formOptions"
+        :key="index"
+      >
         <component
           :is="formItem.type"
           :label="formItem.label"
           :conf="formItem.conf"
           :clearable="true"
           :placeholder="formItem.$attrs?.placeholder || formItem.label"
-          @keyup.enter="fetchData"
+          @keyup.enter="fetchData({ firstPage: true })"
           v-bind="formItem.$attrs"
           v-model="searchData[formItem.name]"
+          style="width: 100%"
         ></component>
-      </el-col>
-    </el-row>
+      </ElCol>
+    </ElRow>
     <!-- Buttons -->
     <div class="search-table-btn-box">
       <slot name="before-btn"></slot>
-      <el-button type="primary" @click="fetchData" v-if="hasFormOptions" :icon="Search">
+      <ElButton
+        type="primary"
+        @click="fetchData({ firstPage: true })"
+        v-if="hasFormOptions"
+        :icon="Search"
+      >
         {{ innerConfig.queryBtnText }}
-      </el-button>
-      <el-button
+      </ElButton>
+      <ElButton
         @click="resetSearchData"
         v-if="innerConfig.showResetBtn && hasFormOptions"
         :icon="DeleteFilled"
       >
         {{ innerConfig.resetBtnText }}
-      </el-button>
+      </ElButton>
       <slot name="after-btn"></slot>
     </div>
     <!-- Table -->
-    <el-table :data="tableData" :border="true" v-bind="innerConfig.tableAttrs">
+    <ElTable :data="tableData" :border="true" v-bind="innerConfig.tableAttrs">
       <slot></slot>
-    </el-table>
+    </ElTable>
     <!-- Pagination -->
-    <div class="pagination-box">
-      <el-pagination
-        layout="total, prev, pager, next"
-        :pager="innerConfig.pageAttrs.page"
+    <div class="pagination-box" v-if="innerConfig.pageAttrs.show">
+      <ElPagination
+        :layout="innerConfig.pageAttrs.layout"
+        :current-page="innerConfig.pageAttrs.page"
         :page-size="innerConfig.pageAttrs.size"
         :total="innerConfig.pageAttrs.total"
+        :page-sizes="innerConfig.pageAttrs.pageSizes"
         @current-change="pageChanged"
-      ></el-pagination>
+        @size-change="sizeChanged"
+      ></ElPagination>
     </div>
   </div>
 </template>
 
 <script lang="ts" setup>
-  import { iSearchTableExposeData, iSearchTablePropsConfig, iSearchDataItem } from './index.d';
+  import {
+    iSearchTableExposeData,
+    iSearchTablePropsConfig,
+    iSearchDataItem,
+    tSearchTableFetchDataMethod,
+  } from './index.d';
   import useSearchTable from './useSearchTable';
-  import { PropType, ref, computed, reactive, onMounted } from 'vue';
+  import { PropType, ref, computed, reactive, onMounted, watch } from 'vue';
   import { Search, DeleteFilled } from '@element-plus/icons-vue';
+  import merge from 'lodash-es/merge';
+  import clone from 'lodash-es/clone';
+  import isEqual from 'lodash-es/isEqual';
 
   // Props
   const { options } = defineProps({
@@ -72,12 +93,23 @@
   // Data
   const tableData = ref<any>([]);
   const searchData = reactive<iSearchDataItem>({});
+  const preSearchData = ref<iSearchDataItem>({});
   const initSearchData = reactive<iSearchDataItem>({});
 
   // Update Inner Config
   const innerConfig = computed<iSearchTablePropsConfig>(() => {
-    return Object.assign(tableConfig, options);
+    return reactive(merge(tableConfig, options));
   });
+
+  // update UI when static data changed
+  watch(
+    () => options.staticData,
+    () => {
+      if (!innerConfig.value.fetchMethod) {
+        fetchData();
+      }
+    },
+  );
 
   const hasFormOptions = computed<boolean>(() => {
     if (innerConfig?.value?.formOptions) return innerConfig.value.formOptions.length > 0;
@@ -92,27 +124,60 @@
     });
   }
 
-  // Fetch Table Data
-  const fetchData = async () => {
-    // Update Pagination
-    if (innerConfig.value.fetchMethod) {
-      const {page, size} = innerConfig.value.pageAttrs
-      const result = await innerConfig.value.fetchMethod({
-        ...searchData,
-       page, 
-       size, 
-      });
-      innerConfig.value.pageAttrs.total = result.total;
+  const updateStaticDataConfig = () => {
+    innerConfig.value.pageAttrs.total = options.staticData?.length;
 
-      tableData.value = result[innerConfig?.value?.listName];
-      // Fetch Success callback
-      innerConfig.value.querySuccess && innerConfig.value.querySuccess();
+    tableData.value = clone(options.staticData)?.splice(
+      (innerConfig.value.pageAttrs.page - 1) * innerConfig.value.pageAttrs.size,
+      innerConfig.value.pageAttrs.size,
+    );
+  };
+
+  // Fetch Table Data
+  const fetchData: tSearchTableFetchDataMethod = async (params) => {
+    if (params?.firstPage) {
+      innerConfig.value.pageAttrs.page = 1;
+    }
+
+    // If has static data and has no fetchMethod
+    if (Array.isArray(innerConfig.value.staticData) && !innerConfig.value.fetchMethod) {
+      updateStaticDataConfig();
+    } else {
+      if (innerConfig.value.fetchMethod) {
+        if (innerConfig.value.beforeQuery) {
+          innerConfig.value.beforeQuery(searchData);
+        }
+
+        if (!isEqual(preSearchData.value, searchData)) {
+          innerConfig.value.pageAttrs.page = 1;
+        }
+
+        preSearchData.value = clone(searchData);
+
+        const result = await innerConfig.value.fetchMethod({
+          ...searchData,
+          page: innerConfig.value.pageAttrs.page,
+          size: innerConfig.value.pageAttrs.size,
+        });
+
+        innerConfig.value.pageAttrs.total = result.total;
+
+        tableData.value = result[innerConfig?.value?.listName || 'rows'];
+        // Fetch Success callback
+        innerConfig.value.querySuccess && innerConfig.value.querySuccess();
+      }
       emits('search', searchData);
     }
   };
 
   const pageChanged = (page: number) => {
     innerConfig.value.pageAttrs.page = page;
+    fetchData();
+  };
+
+  const sizeChanged = (size: number) => {
+    innerConfig.value.pageAttrs.size = size;
+    innerConfig.value.pageAttrs.page = 1;
     fetchData();
   };
 
@@ -128,6 +193,12 @@
     emits('reset', searchData);
   };
 
+  const cleanAllData = () => {
+    innerConfig.value.pageAttrs.total = 0;
+    innerConfig.value.pageAttrs.page = 1;
+    tableData.value = [];
+  };
+
   // Life Cycle
   onMounted(() => {
     if (innerConfig.value.fetchNow) {
@@ -140,6 +211,7 @@
     searchData,
     fetchData,
     updateSearchFormData,
+    cleanAllData,
   } as iSearchTableExposeData);
 </script>
 
@@ -172,3 +244,4 @@
     }
   }
 </style>
+

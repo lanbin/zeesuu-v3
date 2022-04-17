@@ -1,9 +1,9 @@
-import { ref, reactive, computed } from 'vue';
+import { reactive } from 'vue';
 import {
   iSearchTableFormItemDatePicker,
   iSearchTableFormOptionItem,
   iSearchTablePropsConfig,
-} from './index';
+} from './index.d';
 
 export default () => {
   //  Default Table Config
@@ -19,6 +19,7 @@ export default () => {
       total: 0,
       page: 1,
       size: 10,
+      show: true,
     },
     pageOffset: 0,
     listName: 'rows',
@@ -26,8 +27,8 @@ export default () => {
     showResetBtn: true,
     fetchAfterReset: true,
     tableAttrs: {},
-    beforeQuery: () => {},
-    querySuccess: () => {},
+    beforeQuery: (data: any) => ({}),
+    querySuccess: () => ({}),
   });
 
   const defaultDatePickerConfig = ({ label, ...res }: iSearchTableFormItemDatePicker) =>
@@ -43,3 +44,4 @@ export default () => {
     defaultDatePickerConfig,
   };
 };
+

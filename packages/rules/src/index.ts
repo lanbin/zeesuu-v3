@@ -4,9 +4,9 @@ export interface iCallback {
 
 export type iRuleValue = string | number;
 
-// 手机号
+export const PhoneRegExp = /^[1][3,4,5,6,7,8,9][0-9]{9}$/;
 export const validatePhone = (rule: any, value: string, callback: iCallback) => {
-  const reg = /^[1][3,4,5,6,7,8,9][0-9]{9}$/;
+  const reg = PhoneRegExp;
   if (reg.test(value) || value.length == 0) {
     callback();
   } else {
@@ -14,9 +14,9 @@ export const validatePhone = (rule: any, value: string, callback: iCallback) => 
   }
 };
 
-// 邮箱
+export const EmailRegExp = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
 export const validateEmail = (rule: any, value: string, callback: iCallback) => {
-  const reg = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
+  const reg = EmailRegExp;
   if (reg.test(value)) {
     callback();
   } else {
@@ -24,10 +24,10 @@ export const validateEmail = (rule: any, value: string, callback: iCallback) => 
   }
 };
 
-// 身份证
+export const IdentifyRegExp =
+  /(^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$|^[1-9]\d{5}\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{2}$)/;
 export const validateIdentityCard = (rule: any, value: iRuleValue, callback: iCallback) => {
-  const reg =
-    /(^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$|^[1-9]\d{5}\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{2}$)/;
+  const reg = IdentifyRegExp;
   if (reg.test(value.toString())) {
     callback();
   } else {
@@ -62,17 +62,13 @@ export const intRange = ({ min = 0, max = 100, message = '' }) => {
   return [{ validator: checkInt, trigger: 'change,blur' }];
 };
 
-/**
- * 密码长度范围
- */
+// Password Length Range
 export const PASSWORD_LEN_RANGE = {
   MIN: 6,
   MAX: 16,
 };
 
-/**
- * 密码校验
- */
+// Normal Password
 export const validatePassword = (rule: any, value: iRuleValue, callback: iCallback) => {
   const reg = new RegExp(`^[\\d\\w]{${PASSWORD_LEN_RANGE.MIN},${PASSWORD_LEN_RANGE.MAX}}$`);
   if (value && reg.test(value.toString())) {
@@ -81,12 +77,13 @@ export const validatePassword = (rule: any, value: iRuleValue, callback: iCallba
     callback(new Error(`密码长度${PASSWORD_LEN_RANGE.MIN}-${PASSWORD_LEN_RANGE.MAX}位`));
   }
 };
-/**
- * 密码校验
- */
+
+// Password
+export const ComplicatedPasswordRegExp =
+  /^(?![\d]+$)(?![a-zA-Z]+$)(?![!@#$%^&*()]+$)[\da-zA-Z!@#$%^&*()]{6,16}$/;
 export const password = (rule: any, value: string, callback: iCallback) => {
-  // 密码规则英文字母+数字+特殊字符，不区分大小写
-  const reg = /^(?![\d]+$)(?![a-zA-Z]+$)(?![!@#$%^&*()]+$)[\da-zA-Z!@#$%^&*()]{6,16}$/;
+  // Letters(Case Sensitivity) + NumSers + Special Characters
+  const reg = ComplicatedPasswordRegExp;
 
   if (value && reg.test(value)) {
     callback();
@@ -155,24 +152,23 @@ export const validatePort = (rule: any, value: string, callback: iCallback) => {
   }
 };
 
-/**
- * 首字母校验
- */
+// First Letter Uppercase
+export const FirstLetterUppercaseRegExp = /^[A-Z]{1}$/;
 export const validateJhiInitial = (rule: any, value: string, callback: iCallback) => {
-  if (/^[A-Z]{1}$/.test(value)) {
+  if (FirstLetterUppercaseRegExp.test(value)) {
     callback();
   } else {
-    callback(new Error('品牌首字母必须为大写且长度为1位!'));
+    callback(new Error('首字母必须为大写且长度为1位!'));
   }
 };
 
 /**
  * IP校验
  */
+export const IPRegExp =
+  /^((2(5[0-5]|[0-4]\d))|[0-1]?\d{1,2})(\.((2(5[0-5]|[0-4]\d))|[0-1]?\d{1,2})){3}$/;
 export const validateIP = (rule: any, value: string, callback: iCallback) => {
-  if (
-    /^((2(5[0-5]|[0-4]\d))|[0-1]?\d{1,2})(\.((2(5[0-5]|[0-4]\d))|[0-1]?\d{1,2})){3}$/.test(value)
-  ) {
+  if (IPRegExp.test(value)) {
     callback();
   } else {
     callback(new Error('IP格式不正确!'));
@@ -205,8 +201,9 @@ export const floatPosition = (_: number) => {
   return [{ validator: validate, trigger: 'change,blur' }];
 };
 
+export const LetterNumberRegExp = /^[a-zA-Z0-9]+$/g;
 export const letterNumber = (rule: any, value: string, callback: iCallback) => {
-  if (!value || /^[a-zA-Z0-9]+$/g.test(value)) {
+  if (!value || LetterNumberRegExp.test(value)) {
     callback();
   } else {
     callback(new Error('只能填写英文和数字'));
@@ -320,3 +317,4 @@ export default {
   IDCARD_RULE: [{ validator: validateIdentityCard, trigger: RULE_TRIGGER }],
   TOTP_RULE: [{ validator: totpCode, trigger: 'blur' }],
 };
+

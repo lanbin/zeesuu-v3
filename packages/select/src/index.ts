@@ -76,3 +76,4 @@ export default {
     Vue.config.globalProperties.$selectFormat = $selectFormat;
   },
 };
+
