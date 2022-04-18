@@ -1,0 +1,1 @@
+import{_ as e,c as n,o as s,a}from"./app.a3b62270.js";const _='{"title":"Zeesuu","description":"","frontmatter":{},"headers":[{"level":2,"title":"Demo","slug":"demo"}],"relativePath":"index.md","lastUpdated":null}',o={},t=a("",6),p=[t];function c(l,i,r,d,m,u){return s(),n("div",null,p)}var f=e(o,[["render",c]]);export{_ as __pageData,f as default};
