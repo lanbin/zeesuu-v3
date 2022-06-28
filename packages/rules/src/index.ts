@@ -17,7 +17,7 @@ export const validatePhone = (rule: any, value: string, callback: iCallback) => 
 export const EmailRegExp = /^([A-Za-z0-9_\-\.])+\@([A-Za-z0-9_\-\.])+\.([A-Za-z]{2,4})$/;
 export const validateEmail = (rule: any, value: string, callback: iCallback) => {
   const reg = EmailRegExp;
-  if (reg.test(value)) {
+  if (reg.test(value) || value == '') {
     callback();
   } else {
     callback(new Error('请输入正确的邮箱'));
@@ -28,7 +28,7 @@ export const IdentifyRegExp =
   /(^[1-9]\d{5}(18|19|([23]\d))\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{3}[0-9Xx]$|^[1-9]\d{5}\d{2}((0[1-9])|(10|11|12))(([0-2][1-9])|10|20|30|31)\d{2}$)/;
 export const validateIdentityCard = (rule: any, value: iRuleValue, callback: iCallback) => {
   const reg = IdentifyRegExp;
-  if (reg.test(value.toString())) {
+  if (reg.test(value.toString()) || value == '') {
     callback();
   } else {
     callback(new Error('请输入正确的身份证号'));
