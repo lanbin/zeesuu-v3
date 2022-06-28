@@ -1,6 +1,6 @@
 {
   "name": "@zeesuu-v3/viewport-flexible",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Use viewport for mobile page compatibility",
   "main": "lib/index.js",
   "types": "lib/index.d.ts",
